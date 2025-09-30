@@ -626,9 +626,9 @@ static void MX_TIM2_Init(void)
  80004bc:	4b19      	ldr	r3, [pc, #100]	; (8000524 <MX_TIM2_Init+0x94>)
  80004be:	2200      	movs	r2, #0
  80004c0:	609a      	str	r2, [r3, #8]
-  htim2.Init.Period = 9 ;
+  htim2.Init.Period = 10 ;
  80004c2:	4b18      	ldr	r3, [pc, #96]	; (8000524 <MX_TIM2_Init+0x94>)
- 80004c4:	2209      	movs	r2, #9
+ 80004c4:	220a      	movs	r2, #10
  80004c6:	60da      	str	r2, [r3, #12]
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
  80004c8:	4b16      	ldr	r3, [pc, #88]	; (8000524 <MX_TIM2_Init+0x94>)
@@ -804,7 +804,7 @@ static void MX_GPIO_Init(void)
 080005d0 <HAL_TIM_PeriodElapsedCallback>:
 //every 10ms
 
-int counter7SEG = 50;	//500 ms count down
+int counter7SEG = 25;	//250 ms count down
 int counterLed = 100;	//toggle DOT led every 1 second
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){

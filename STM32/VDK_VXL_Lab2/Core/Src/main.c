@@ -251,7 +251,7 @@ static void MX_TIM2_Init(void)
   htim2.Instance = TIM2;
   htim2.Init.Prescaler = 7999;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 9 ;
+  htim2.Init.Period = 10 ;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
@@ -323,7 +323,7 @@ static void MX_GPIO_Init(void)
 
 //every 10ms
 
-int counter7SEG = 50;	//500 ms count down
+int counter7SEG = 25;	//250 ms count down
 int counterLed = 100;	//toggle DOT led every 1 second
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
