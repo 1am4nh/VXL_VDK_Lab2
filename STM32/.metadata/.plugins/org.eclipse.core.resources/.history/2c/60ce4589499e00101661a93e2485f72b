@@ -144,7 +144,7 @@ void update7SEG(int index){
 	}
 }
 
-int hour = 15, minute = 8, second = 55;
+int hour = 15, minute = 8, second = 50;
 void updateClockBuffer(){
 	//extract the second digit of hour
 	led_buffer[0] = (hour / 10) % 10;

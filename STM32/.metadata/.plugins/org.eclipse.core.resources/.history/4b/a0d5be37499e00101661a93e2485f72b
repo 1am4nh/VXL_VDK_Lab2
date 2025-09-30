@@ -143,18 +143,6 @@ void update7SEG(int index){
 			break;
 	}
 }
-
-int hour = 15, minute = 8, second = 55;
-void updateClockBuffer(){
-	//extract the second digit of hour
-	led_buffer[0] = (hour / 10) % 10;
-	//extract the first digit of hour
-	led_buffer[1] = hour % 10;
-	//extract the second digit of second
-	led_buffer[2] = (minute / 10) % 10;
-	//extract the first digit of second
-	led_buffer[3] = minute % 10;
-}
 /* USER CODE END 0 */
 
 /**
@@ -200,20 +188,6 @@ int main(void)
   HAL_GPIO_WritePin(DOT_GPIO_Port, DOT_Pin, RESET);
   while (1)
   {
-	  second++;
-	  	  if(second >= 60){
-	  		  second = 0;
-	  		  minute++;
-	  	  }
-	  	  if(minute >= 60){
-	  		  minute = 0;
-	  		  hour++;
-	  	  }
-	  	  if(hour >= 24){
-	  		  hour = 0;
-	  	  }
-	  	  updateClockBuffer();
-	  	  HAL_Delay(1000);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -364,6 +338,12 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 			update7SEG(index_led); 			//call update 7-segment led fucntion
 
 			index_led = (index_led + 1) % 4;	//update the index of the next 7-segment led to light up next
+		}
+		//check if the dot counter reach zero
+		if(counterLed <= 0){ //toggle DOT pin
+
+			HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
+			counterLed = 100;	//reset the DOT counter
 		}
 }
 /* USER CODE END 4 */
