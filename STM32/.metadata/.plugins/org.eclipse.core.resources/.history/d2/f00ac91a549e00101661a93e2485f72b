@@ -208,10 +208,7 @@ void timer_run(){
 			if(timer3_counter <= 0) timer3_flag = 1;
 		}
 }
-const int MAX_LED_MATRIX = 8;
-int index_led_matrix = 0;
-int index_row = 0;
-uint8_t matrix_buffer[8] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08};
+
 void updateMatrixBuffer(){
 	//this is a demo, only display letter a
 	int char_A[8] = {0xe7, 0xc3, 0x99, 0x99, 0x81, 0x81, 0x99, 0x99};
