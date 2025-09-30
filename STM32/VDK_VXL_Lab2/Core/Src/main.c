@@ -138,7 +138,9 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, SET);
   HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, SET);
-
+  HAL_GPIO_WritePin(EN2_GPIO_Port, EN2_Pin, SET);
+  HAL_GPIO_WritePin(EN3_GPIO_Port, EN3_Pin, SET);
+  HAL_GPIO_WritePin(DOT_GPIO_Port, DOT_Pin, RESET);
   while (1)
   {
     /* USER CODE END WHILE */
@@ -276,43 +278,72 @@ static void MX_GPIO_Init(void)
 
 //every 10ms
 
-int counter7SEG = 50;  	//500 ms count down
-
-int index_led = 0;		//7-segment leds index
+int counter7SEG = 50;	//500 ms count down
+int counterLed = 100;	//toggle DOT led every 1 second
+int index_led = 0;	//7-segment leds index
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 
 	counter7SEG--; 	//decease the counter
-
+	counterLed--;
 	if(counter7SEG <= 0){ 	//check if the counter reach zero
 
 		counter7SEG = 50; //reset the counter
 
 		switch(index_led){ //turn on the led base on index_led
 
-			case 0: //if index led is 0, turn on the first led
+					case 0:	//turn on 7-segment led 1
 
-			    HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, RESET);
-			    HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, SET);
-			    display7SEG(1);
-			    index_led = 1;
-				break;
+						HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, RESET);
+						HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, SET);
+						HAL_GPIO_WritePin(EN2_GPIO_Port, EN2_Pin, SET);
+						HAL_GPIO_WritePin(EN3_GPIO_Port, EN3_Pin, SET);
+					    display7SEG(1);
+					    index_led = 1;
+						break;
 
-			case 1: //if index led is 1 turn on the second led
+					case 1: //turn on 7-segment led 2
 
-				HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, SET);
-				HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, RESET);
-				display7SEG(2);
-				index_led = 0;
-				break;
+						HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, SET);
+						HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, RESET);
+						HAL_GPIO_WritePin(EN2_GPIO_Port, EN2_Pin, SET);
+						HAL_GPIO_WritePin(EN3_GPIO_Port, EN3_Pin, SET);
+						display7SEG(2);
+						index_led = 2;
+						break;
 
-			default:
-				break;
+					case 2:	//turn on 7-segment led 3
 
+						HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, SET);
+						HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, SET);
+						HAL_GPIO_WritePin(EN2_GPIO_Port, EN2_Pin, RESET);
+						HAL_GPIO_WritePin(EN3_GPIO_Port, EN3_Pin, SET);
+						display7SEG(3);
+						index_led = 3;
+						break;
+
+					case 3: 	//turn on 7-segment led 4
+
+						HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, SET);
+						HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, SET);
+						HAL_GPIO_WritePin(EN2_GPIO_Port, EN2_Pin, SET);
+						HAL_GPIO_WritePin(EN3_GPIO_Port, EN3_Pin, RESET);
+						display7SEG(0);
+						index_led = 0;
+						break;
+
+					default:
+						break;
 		}
 
 	}
+	//check if the dot counter reach zero
 
+		if(counterLed <= 0){ //toggle DOT pin
+
+			HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
+			counterLed = 100;	//reset the DOT counter
+		}
 }
 /* USER CODE END 4 */
 
