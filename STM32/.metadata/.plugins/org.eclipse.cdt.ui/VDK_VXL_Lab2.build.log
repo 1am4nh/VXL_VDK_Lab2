@@ -1,4 +1,4 @@
-05:04:43 **** Incremental Build of configuration Debug for project VDK_VXL_Lab2 ****
+05:19:10 **** Incremental Build of configuration Debug for project VDK_VXL_Lab2 ****
 make -j12 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103x6 -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
 arm-none-eabi-gcc -o "VDK_VXL_Lab2.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\ADMIN\Documents\Study\VXL-VDK\VXL_VDK_Lab2\STM32\VDK_VXL_Lab2\STM32F103C6UX_FLASH.ld" --specs=nosys.specs -Wl,-Map="VDK_VXL_Lab2.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
@@ -7,9 +7,9 @@ Finished building target: VDK_VXL_Lab2.elf
 arm-none-eabi-size   VDK_VXL_Lab2.elf 
 arm-none-eabi-objdump -h -S  VDK_VXL_Lab2.elf  > "VDK_VXL_Lab2.list"
 arm-none-eabi-objcopy  -O ihex  VDK_VXL_Lab2.elf  "VDK_VXL_Lab2.hex"
-arm-none-eabi-objcopy  -O binary  VDK_VXL_Lab2.elf  "VDK_VXL_Lab2.bin"
    text	   data	    bss	    dec	    hex	filename
-   7936	     56	   1648	   9640	   25a8	VDK_VXL_Lab2.elf
+   8060	     60	   1652	   9772	   262c	VDK_VXL_Lab2.elf
+arm-none-eabi-objcopy  -O binary  VDK_VXL_Lab2.elf  "VDK_VXL_Lab2.bin"
 Finished building: default.size.stdout
  
 Finished building: VDK_VXL_Lab2.hex
@@ -19,5 +19,5 @@ Finished building: VDK_VXL_Lab2.bin
 Finished building: VDK_VXL_Lab2.list
  
 
-05:04:43 Build Finished. 0 errors, 0 warnings. (took 470ms)
+05:19:11 Build Finished. 0 errors, 0 warnings. (took 524ms)
 

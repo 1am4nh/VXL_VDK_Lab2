@@ -144,7 +144,7 @@ void update7SEG(int index){
 	}
 }
 
-int hour = 15, minute = 8, second = 50;
+int hour = 15, minute = 8, second = 55;
 void updateClockBuffer(){
 	//extract the second digit of hour
 	led_buffer[0] = (hour / 10) % 10;
@@ -154,21 +154,6 @@ void updateClockBuffer(){
 	led_buffer[2] = (minute / 10) % 10;
 	//extract the first digit of second
 	led_buffer[3] = minute % 10;
-}
-
-int timer0_counter = 0;
-int timer0_flag = 0;
-int TIMER_CYCLE = 1000;
-void setTimer0(int duration){
-	timer0_counter = duration / TIMER_CYCLE;
-	timer0_flag = 0;
-}
-void timer_run(){
-	if(timer0_counter > 0){
-		timer0_counter--;}
-	if(timer0_counter <= 0){
-		timer0_flag = 1;
-	}
 }
 /* USER CODE END 0 */
 
@@ -213,28 +198,22 @@ int main(void)
   HAL_GPIO_WritePin(EN2_GPIO_Port, EN2_Pin, SET);
   HAL_GPIO_WritePin(EN3_GPIO_Port, EN3_Pin, SET);
   HAL_GPIO_WritePin(DOT_GPIO_Port, DOT_Pin, RESET);
-  HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, RESET);
-  setTimer0(1000);
   while (1)
   {
 	  second++;
-	  	  	  if(second >= 60){
-	  	  		  second = 0;
-	  	  		  minute++;
-	  	  	  }
-	  	  	  if(minute >= 60){
-	  	  		  minute = 0;
-	  	  		  hour++;
-	  	  	  }
-	  	  	  if(hour >= 24){
-	  	  		  hour = 0;
-	  	  	  }
-	  	  	  updateClockBuffer();
-	  if(timer0_flag == 1){
-	  		HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
-	  		setTimer0(2000);
-
-	  	}
+	  	  if(second >= 60){
+	  		  second = 0;
+	  		  minute++;
+	  	  }
+	  	  if(minute >= 60){
+	  		  minute = 0;
+	  		  hour++;
+	  	  }
+	  	  if(hour >= 24){
+	  		  hour = 0;
+	  	  }
+	  	  updateClockBuffer();
+	  	  HAL_Delay(1000);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -365,20 +344,25 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 //timer interrupt function is being call every 10ms
+
 //initial counter for 7 segment led, the counter will count down
+
 //every 10ms
 
 int counter7SEG = 25;	//250 ms count down
 int counterLed = 100;	//toggle DOT led every 1 second
+
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
-	timer_run();
+
 	counter7SEG--; 	//decease the counter
 	counterLed--;
 
 		//check if 7-segment counter reach zero
 		if(counter7SEG <= 0){
+
 			counter7SEG = 50; 			//reset the counter
 			update7SEG(index_led); 			//call update 7-segment led fucntion
+
 			index_led = (index_led + 1) % 4;	//update the index of the next 7-segment led to light up next
 		}
 }
