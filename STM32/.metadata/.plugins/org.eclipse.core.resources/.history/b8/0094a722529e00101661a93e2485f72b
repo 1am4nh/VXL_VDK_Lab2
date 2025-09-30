@@ -263,7 +263,6 @@ int main(void)
 	  if(timer1_flag == 1){
 		  update7SEG(); //turn on 7-segment led
 		  setTimer1(250); //reset the timer for the next update
-	  }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

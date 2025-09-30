@@ -235,7 +235,6 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   HAL_GPIO_WritePin(DOT_GPIO_Port, DOT_Pin, RESET);
   setTimer0(1000); 		//clock time update interval is set to 1 second
-  setTimer1(250);		//7 segment led on time is set to 250 ms or 1Hz
   updateClockBuffer();  //initial clock buffer
 
   while (1)
@@ -259,11 +258,6 @@ int main(void)
 	  	  HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin); //toggle DOT led pin
 	  	  setTimer0(1000);
 	  	}
-	  //check if timer1_flag is set
-	  if(timer1_flag == 1){
-		  update7SEG(); //turn on 7-segment led
-		  setTimer1(250); //reset the timer for the next update
-	  }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -396,11 +390,16 @@ static void MX_GPIO_Init(void)
 //timer interrupt fucntion being call every 10 ms
 //initial 7-segment counter to light up 7-setgment led every 250 ms
 
-int updateCounter = 0;
+int updateCounter = 25;
 
-int i = 0;
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 	timer_run();
+	//decrease 7-segment counter
+	updateCounter--;
+	if(updateCounter == 0){
+		updateCounter = 25; 	//reset the counter
+	    update7SEG();
+		}
 }
 /* USER CODE END 4 */
 

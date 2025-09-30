@@ -263,7 +263,6 @@ int main(void)
 	  if(timer1_flag == 1){
 		  update7SEG(); //turn on 7-segment led
 		  setTimer1(250); //reset the timer for the next update
-	  }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -396,9 +395,6 @@ static void MX_GPIO_Init(void)
 //timer interrupt fucntion being call every 10 ms
 //initial 7-segment counter to light up 7-setgment led every 250 ms
 
-int updateCounter = 0;
-
-int i = 0;
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 	timer_run();
 }
